@@ -1,13 +1,10 @@
-import express, {
-  Express,
-  Response,
-  Request,
-} from 'express';
+import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { DataSource } from 'typeorm';
 import bodyParser from 'body-parser';
 import { Task } from './src/tasks/tasks.entity';
+import { tasksRouter } from './src/tasks/tasks.router';
 
 //Instantiate express app
 const app: Express = express();
@@ -37,9 +34,6 @@ const port = process.env.PORT;
 
 //Create a default route
 
-app.get('/', (_req: Request, res: Response) => {
-  res.send('Hello  from typescript project');
-});
 AppDataSource.initialize()
   .then(() => {
     // Start Listening to the request on the defined port
@@ -49,3 +43,5 @@ AppDataSource.initialize()
   .catch(() => {
     console.log('Error during data source');
   });
+
+app.use('/', tasksRouter);
