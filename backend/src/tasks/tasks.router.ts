@@ -6,8 +6,9 @@ export const tasksRouter: Router = Router();
 tasksRouter.get(
   '/tasks',
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (_req: Request, res: Response) => {
+  async (_req: Request, res: Response) => {
     const taskController = new TaskController();
-    taskController.getAll();
+    const allTasks = await taskController.getAll();
+    res.json(allTasks).status(200);
   },
 );
